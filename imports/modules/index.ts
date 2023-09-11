@@ -13,7 +13,7 @@ class Modules implements IModules {
         this.modulesRouterList = [
             ...pages.pagesRouterList,
             ...userprofile.userProfileRouterList,
-            ...example.exampleRouterList,
+            // ...example.exampleRouterList,
             ...toDos.toDosRouterList,
         ];
 
@@ -21,7 +21,7 @@ class Modules implements IModules {
         this.modulesAppMenuItemList = [
             ...pages.pagesMenuItemList,
             ...userprofile.userProfileMenuItemList,
-            ...example.exampleMenuItemList,
+            // ...example.exampleMenuItemList,
             ...toDos.toDosMenuItemList,
         ];
     }

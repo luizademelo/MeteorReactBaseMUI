@@ -31,6 +31,12 @@ export const toDosSch = {
         optional: true,
         options: ['Todo', 'Doing', 'Done'],
     },
+    isPersonal: {
+        type: Boolean,
+        label: 'É uma tarefa pessoal',
+        defaultValue: true,
+        optional: false,
+    },
     type: {
         type: String,
         label: 'Tipo',

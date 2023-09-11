@@ -20,6 +20,8 @@ import { IToDos } from '../../api/toDosSch';
 import { IDefaultContainerProps, IDefaultDetailProps, IMeteorError } from '/imports/typings/BoilerplateDefaultTypings';
 import { useTheme } from '@mui/material/styles';
 import { showLoading } from '/imports/ui/components/Loading/Loading';
+import Switch from "@mui/material/Switch";
+import {FormControlLabel} from "@mui/material";
 
 interface IToDosDetail extends IDefaultDetailProps {
 	toDosDoc: IToDos;
@@ -96,7 +98,9 @@ const ToDosDetail = (props: IToDosDetail) => {
 					<TextField key={'f4-nomeTarefaKEY'} placeholder="Nome da Tarefa" name="name" />
 					<TextField key={'f4-descricaoTarefaKEY'} placeholder="Descrição da Tarefa" name="description" />
 				</FormGroup>
-
+				<FormGroup>
+					<FormControlLabel control={<Switch />} label={'É uma tarefa pessoal'} name={'isPersonal'}></FormControlLabel>
+				</FormGroup>
 				<SliderField key={'ExempleDetail-SliderFieldKEY'} placeholder="Slider" name="slider" />
 
 				<RadioButtonField
