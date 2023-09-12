@@ -12,7 +12,7 @@ import Toolbar from '@mui/material/Toolbar';
 import * as appStyle from '/imports/materialui/styles';
 import Container from '@mui/material/Container';
 import { IAppMenu } from '/imports/modules/modulesTypings';
-import { FormControlLabel } from '@mui/material';
+import { FormControlLabel, Typography } from '@mui/material';
 import Switch from '@mui/material/Switch';
 import { ILayoutProps } from '/imports/typings/BoilerplateDefaultTypings';
 import Box from '@mui/material/Box';
@@ -21,6 +21,7 @@ const HomeIconButton = ({ navigate }: any) => {
 	return (
 		<Box onClick={() => navigate('/')} sx={fixedMenuLayoutStyle.containerHomeIconButton}>
 			<img style={fixedMenuLayoutStyle.homeIconButton} src="/images/wireframe/logo.png" />
+			<Typography>Início</Typography>
 		</Box>
 	);
 };

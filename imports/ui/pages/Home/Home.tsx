@@ -2,26 +2,29 @@ import React from 'react';
 
 import Container from '@mui/material/Container';
 import * as appStyle from '/imports/materialui/styles';
+import {ILayoutProps} from "/imports/typings/BoilerplateDefaultTypings";
+import {Typography} from "@mui/material";
+import {useUserAccount} from "/imports/hooks/useUserAccount";
+import {IUserProfile} from "/imports/userprofile/api/UserProfileSch";
+import {useNavigate} from "react-router-dom";
 
-const Home = () => (
+const Home = () => {
+    const {isLoggedIn, user} = useUserAccount();
+    const userdef = user as IUserProfile;
+    const navigate = useNavigate();
+
+    React.useEffect(() => {
+        if(!user){
+            navigate('/signin');
+        }
+    })
+
+    return (
     <>
         <Container>
-            <h1>Material-UI Template</h1>
-            <p>This is a basic fixed menu template using fixed size containers.</p>
-            <p>
-                A text container is used for the main container, which is useful for single column
-                layouts.
-            </p>
-
-            <img src="/images/wireframe/media-paragraph.png" style={appStyle.containerHome} />
-            <img src="/images/wireframe/paragraph.png" style={appStyle.containerHome} />
-            <img src="/images/wireframe/paragraph.png" style={appStyle.containerHome} />
-            <img src="/images/wireframe/paragraph.png" style={appStyle.containerHome} />
-            <img src="/images/wireframe/paragraph.png" style={appStyle.containerHome} />
-            <img src="/images/wireframe/paragraph.png" style={appStyle.containerHome} />
-            <img src="/images/wireframe/paragraph.png" style={appStyle.containerHome} />
+            <Typography variant={'h1'}>Olá {userdef ? userdef.username : 'nao logado'}!</Typography>
         </Container>
     </>
-);
+);}
 
 export default Home;

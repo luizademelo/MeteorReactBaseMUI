@@ -98,8 +98,8 @@ const ToDosDetail = (props: IToDosDetail) => {
 					<TextField key={'f4-nomeTarefaKEY'} placeholder="Nome da Tarefa" name="name" />
 					<TextField key={'f4-descricaoTarefaKEY'} placeholder="Descrição da Tarefa" name="description" />
 				</FormGroup>
-				<FormGroup>
-					<FormControlLabel control={<Switch />} label={'É uma tarefa pessoal'} name={'isPersonal'}></FormControlLabel>
+				<FormGroup key={'fieldsFive'}>
+					<FormControlLabel key={'f5-eTarefaPessoal'} control={<Switch />} label={'É uma tarefa pessoal'} name={'isPersonal'}></FormControlLabel>
 				</FormGroup>
 				<SliderField key={'ExempleDetail-SliderFieldKEY'} placeholder="Slider" name="slider" />
 
