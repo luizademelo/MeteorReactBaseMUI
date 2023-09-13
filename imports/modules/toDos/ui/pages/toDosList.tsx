@@ -97,8 +97,8 @@ const ToDosList = (props: IToDosList) => {
 	};
 
 	const callRemove = (doc: IToDos) => {
-		const title = 'Remover exemplo';
-		const message = `Deseja remover o exemplo "${doc.title}"?`;
+		const title = 'Remover tarefa';
+		const message = `Deseja remover a tarefa "${doc.title}"?`;
 		showDeleteDialog && showDeleteDialog(title, message, doc, remove);
 	};
 
@@ -274,7 +274,7 @@ export const ToDosListContainer = withTracker((props: IDefaultContainerProps) =>
 						showNotification({
 							type: 'success',
 							title: 'Operação realizada!',
-							description: `O exemplo foi removido com sucesso!`
+							description: `A tarefa foi removida com sucesso!`
 						});
 				} else {
 					console.log('Error:', e);

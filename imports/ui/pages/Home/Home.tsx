@@ -10,19 +10,25 @@ import {useNavigate} from "react-router-dom";
 
 const Home = () => {
     const {isLoggedIn, user} = useUserAccount();
-    const userdef = user as IUserProfile;
+    const userprofile = user as IUserProfile;
     const navigate = useNavigate();
 
     React.useEffect(() => {
         if(!user){
             navigate('/signin');
         }
-    })
+    }, [user]);
 
     return (
     <>
         <Container>
-            <Typography variant={'h1'}>Olá {userdef ? userdef.username : 'nao logado'}!</Typography>
+            {
+                userprofile ? 
+                <Typography variant={'h1'}>Olá {userprofile.username}!</Typography>
+                
+                : 
+                <Typography>Faça login para continuar</Typography>
+            }
         </Container>
     </>
 );}
