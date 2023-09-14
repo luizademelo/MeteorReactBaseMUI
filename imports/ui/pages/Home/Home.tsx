@@ -7,6 +7,7 @@ import {Typography} from "@mui/material";
 import {useUserAccount} from "/imports/hooks/useUserAccount";
 import {IUserProfile} from "/imports/userprofile/api/UserProfileSch";
 import {useNavigate} from "react-router-dom";
+import { SimpleToDoList } from '../../components/SimpleToDoList/SimpleToDoList';
 
 const Home = () => {
     const {isLoggedIn, user} = useUserAccount();
@@ -29,6 +30,9 @@ const Home = () => {
                 : 
                 <Typography>Faça login para continuar</Typography>
             }
+        </Container>
+        <Container>
+            <SimpleToDoList />
         </Container>
     </>
 );}

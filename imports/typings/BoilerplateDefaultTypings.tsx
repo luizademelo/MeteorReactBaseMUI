@@ -37,6 +37,8 @@ export interface IDefaultListProps extends IDefaultContainerProps {
 	user: IUserProfile;
 	onSearch: (text?: string) => void;
 	total: number;
+	skip?: number;
+	limit?: number; 
 	loading: boolean;
 	setPage: (page: number) => void;
 	setPageSize: (pageSize: number) => void;

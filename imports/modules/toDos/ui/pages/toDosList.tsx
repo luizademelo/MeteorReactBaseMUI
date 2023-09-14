@@ -25,7 +25,7 @@ import { showLoading } from '/imports/ui/components/Loading/Loading';
 import { ComplexTable } from '/imports/ui/components/ComplexTable/ComplexTable';
 import ToggleField from '/imports/ui/components/SimpleFormFields/ToggleField/ToggleField';
 
-interface IToDosList extends IDefaultListProps {
+export interface IToDosList extends IDefaultListProps {
 	remove: (doc: IToDos) => void;
 	viewComplexTable: boolean;
 	setViewComplexTable: (_enable: boolean) => void;
@@ -263,6 +263,7 @@ export const ToDosListContainer = withTracker((props: IDefaultContainerProps) =>
 		skip
 	});
 	const toDoss = subHandle?.ready() ? toDosApi.find(filter, { sort }).fetch() : [];
+	console.log('toDos List: ', toDoss);
 
 	return {
 		toDoss,
@@ -329,3 +330,4 @@ export const ToDosListContainer = withTracker((props: IDefaultContainerProps) =>
 		}
 	};
 })(showLoading(ToDosList));
+
