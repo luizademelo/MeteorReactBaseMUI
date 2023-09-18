@@ -542,7 +542,7 @@ const getLightTheme = (props: { fontScale: number; isMobile: boolean }): IThemeO
 
 			MuiListItem: {
 				defaultProps: {
-					dense: true
+					dense: true,
 				}
 			},
 

@@ -6,6 +6,7 @@ import { IDefaultListProps } from '/imports/typings/BoilerplateDefaultTypings';
 import { toDosApi } from '/imports/modules/toDos/api/toDosApi';
 import { useTracker, withTracker } from 'meteor/react-meteor-data';
 import { SimpleToDoListItem } from '../SimpleToDoListItem/SimpleTodoListItem';
+import { SimpleToDoListStyle } from './SimpleToDoListStyle';
 
 
 
@@ -32,10 +33,8 @@ export const SimpleToDoList = () => {
     console.log('todos: ', toDoss);
 
     return (
-        <>
-            <List>
-                {toDoss.map((todo) => <SimpleToDoListItem key={todo._id} task={todo}/>)}
-            </List>
-        </>
+        <List>
+            {toDoss.map((todo) => <SimpleToDoListItem key={todo._id} task={todo}/>)}
+        </List>
     )
 }

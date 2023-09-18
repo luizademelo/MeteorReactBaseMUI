@@ -1,13 +1,14 @@
 import { ListItem, ListItemText } from '@mui/material';
 import React from 'react'; 
+import { SimpleToDoListItemStyle } from './SimpleToDoListItemStyle';
 
 export const SimpleToDoListItem = ({task}) => {
 
     return (
-        <ListItem >
+        <ListItem sx={SimpleToDoListItemStyle}>
             <ListItemText
                 primary={task.title}
-                sx={{color: 'red'}}
+                primaryTypographyProps={{color: 'black'}}
             />
         </ListItem>
     )
