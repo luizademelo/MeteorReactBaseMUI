@@ -59,9 +59,6 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
                 }
             },
             ['get'],
-            // {
-                //authFunction: (_h, _p) => _p.toDosId === 'flkdsajflkasdjflsa',
-            // }
         );
     }
 }

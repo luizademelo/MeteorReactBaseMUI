@@ -460,16 +460,6 @@ export const SimpleTable = React.memo((props: ISimpleTable) => {
             ) : null}
 
             <Table className={'mobileTable'} style={{ ...simpleTableStyle.tableBox, ...styles }}>
-                {/* <TableHead> */}
-                {/*    <TableRow > */}
-                {/*        {cols.map(col=>{ */}
-                {/*            return <TableCell scope="col" {...{"data-label":col.label}} style={simpleTableStyle.tableCell} key={col.name+col.label}>{col.label}</TableCell> */}
-                {/*        })} */}
-                {/*        {actions?( */}
-                {/*            <TableCell  style={simpleTableStyle.tableCell}>{'Ações'}</TableCell> */}
-                {/*        ):null} */}
-                {/*    </TableRow> */}
-                {/* </TableHead> */}
                 <EnhancedTableHead
                     headCells={cols}
                     hasActions={!!actions && actions.length > 0}
@@ -479,16 +469,6 @@ export const SimpleTable = React.memo((props: ISimpleTable) => {
                     disabledOrder={disabledOrder}
                 />
                 <TableBody>{tableBody}</TableBody>
-                {/* }
-    <TablePagination
-      rowsPerPageOptions={[5, 10, 25]}
-      component="div"
-      count={row}
-      rowsPerPage={rowsPerPage}
-      page={page}
-      onPageChange={handleChangePage}
-      onRowsPerPageChange={handleChangeRowsPerPage}
-    />{ */}
             </Table>
         </div>
     );

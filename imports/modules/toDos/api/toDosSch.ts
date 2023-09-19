@@ -34,8 +34,8 @@ export const toDosSch = {
     isPersonal: {
         type: Boolean,
         label: 'É uma tarefa pessoal',
-        defaultValue: true,
-        optional: false,
+        defaultValue: false,
+        optional: true,
     },
     type: {
         type: String,
