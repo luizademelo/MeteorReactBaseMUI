@@ -10,23 +10,20 @@ import { SimpleToDoListStyle } from './SimpleToDoListStyle';
 
 
 
-export const SimpleToDoList = () => {
-
-    // const {user, skip, limit} = props; 
+export const SimpleToDoList = ({props}) => {
 
     const config = subscribeConfig.get(); 
-    const filter = {...config.filter}; 
-    const sort = {
-		[config.sortProperties.field]: config.sortProperties.sortAscending ? 1 : -1
-	};
-    const limit = 5
+    const filter = {...config.filter};
+
+    const {sort, limit} = props; 
+
     const skip = (config.pageProperties.currentPage-1) * config.pageProperties.pageSize;
 
     // Collection Subscribe
     
     const toDoss = useTracker(() => {
         const subHandle = toDosApi.subscribe('toDosList', filter,{sort, limit, skip}); 
-        const toDoss =  subHandle?.ready() ? toDosApi.find(filter,{sort}).fetch() : []; 
+        const toDoss =  subHandle?.ready() ? toDosApi.find(filter,{sort, limit}).fetch() : []; 
         return toDoss; 
     }) 
 

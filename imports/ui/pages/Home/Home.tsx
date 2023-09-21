@@ -20,6 +20,11 @@ const Home = () => {
         }
     }, [user]);
 
+    const props = {
+        sort: {createdat: 1},
+        limit: 5,
+    }
+
     return (
     <>
         <Container>
@@ -33,7 +38,7 @@ const Home = () => {
         </Container>
         <Container>
             <Typography>Adicionadas Recentemente</Typography>
-            <SimpleToDoList />
+            <SimpleToDoList props={props}/>
         </Container>
     </>
 );}

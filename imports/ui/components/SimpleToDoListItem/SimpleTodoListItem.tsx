@@ -10,8 +10,6 @@ import { toDosApi } from '/imports/modules/toDos/api/toDosApi';
 export const SimpleToDoListItem = ({task}) => {
 
     const handleStatusToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('task: ', task.isPersonal); 
-        console.log(task);
         toDosApi.changeToDoStatus(task._id, event.target.checked); 
     }
 

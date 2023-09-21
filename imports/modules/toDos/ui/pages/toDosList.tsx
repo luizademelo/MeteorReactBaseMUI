@@ -224,7 +224,7 @@ export const subscribeConfig = new ReactiveVar<IConfigList & { viewComplexTable:
 		currentPage: 1,
 		pageSize: 25
 	},
-	sortProperties: { field: 'createdat', sortAscending: true },
+	sortProperties: { field: 'createdat', sortAscending: false },
 	filter: {},
 	searchBy: null,
 	viewComplexTable: false
@@ -320,7 +320,7 @@ export const ToDosListContainer = withTracker((props: IDefaultContainerProps) =>
 			config.filter = {};
 			subscribeConfig.set(config);
 		},
-		setSort: (sort = { field: 'createdat', sortAscending: true }) => {
+		setSort: (sort = { field: 'createdat', sortAscending: false }) => {
 			config.sortProperties = sort;
 			subscribeConfig.set(config);
 		},
