@@ -17,7 +17,7 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
             'toDosList',
             (filter = {}) => {
                 return this.defaultListCollectionPublication(filter, {
-                    projection: { image: 1, title: 1, description: 1, createdby: 1 },
+                    projection: { image: 1, title: 1, description: 1, createdby: 1, isPersonal: 1, status: 1 },
                 });
             },
             (doc: IToDos & { nomeUsuario: string }) => {
@@ -60,7 +60,20 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
             },
             ['get'],
         );
+
+        this.registerMethod('changeToDoStatus', this.serverChangeToDoStatus); 
     }
+    serverChangeToDoStatus = (id:String, newStatus:Boolean, context) => {
+        // return this.serverUpdate({_id: id, title: String, statusToggle: newStatus}, context); 
+        return this.getCollectionInstance().update(id, {
+            $set: {
+                status: newStatus,
+            }
+        })
+    }
+
+
+
 }
 
 export const toDosServerApi = new ToDosServerApi();

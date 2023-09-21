@@ -37,6 +37,12 @@ export const toDosSch = {
         defaultValue: false,
         optional: true,
     },
+    status: {
+        type: Boolean,
+        label: 'Status',
+        defaultValue: false,
+        optional: true,
+    },
     type: {
         type: String,
         label: 'Tipo',
@@ -152,12 +158,7 @@ export const toDosSch = {
         optional: true,
         radiosList: ['Todo', 'Doing', 'Done'],
     },
-    statusToggle: {
-        type: Boolean,
-        label: 'Status Toogle',
-        defaultValue: false,
-        optional: true,
-    },
+
 };
 
 export interface IToDos extends IDoc {
@@ -166,5 +167,6 @@ export interface IToDos extends IDoc {
     description: string;
     audio: string;
     statusCheck: object;
-    statusToggle: boolean;
+    status: boolean;
+    isPersonal: boolean;
 }

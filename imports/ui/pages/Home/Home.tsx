@@ -32,6 +32,7 @@ const Home = () => {
             }
         </Container>
         <Container>
+            <Typography>Adicionadas Recentemente</Typography>
             <SimpleToDoList />
         </Container>
     </>

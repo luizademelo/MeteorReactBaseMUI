@@ -9,6 +9,9 @@ class ExampleApi extends ProductBase<IExample> {
             enableSubscribeObserver: true,
         });
     }
+
+    
+
 }
 
 export const exampleApi = new ExampleApi();

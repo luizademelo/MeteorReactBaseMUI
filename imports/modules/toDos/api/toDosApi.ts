@@ -9,6 +9,10 @@ class ToDosApi extends ProductBase<IToDos> {
             enableSubscribeObserver: true,
         });
     }
+
+    changeToDoStatus = (id:String, newStatus:Boolean, callback=()=>{}) => {
+        this.callMethod('changeToDoStatus', id, newStatus, callback); 
+    }
 }
 
 export const toDosApi = new ToDosApi();

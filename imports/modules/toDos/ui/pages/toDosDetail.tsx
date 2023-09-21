@@ -77,7 +77,7 @@ const ToDosDetail = (props: IToDosDetail) => {
 				key={'ExempleDetail-SimpleFormKEY'}
 				mode={screenState}
 				schema={toDosApi.getSchema()}
-				doc={toDosDoc}
+				doc={{...toDosDoc, status: false}}
 				onSubmit={handleSubmit}
 				loading={loading}>
 				<ImageCompactField key={'ExempleDetail-ImageCompactFieldKEY'} label={'Imagem Zoom+Slider'} name={'image'} />
@@ -101,6 +101,7 @@ const ToDosDetail = (props: IToDosDetail) => {
 				<FormGroup key={'fieldsFive'}>
 					<FormControlLabel key={'f5-eTarefaPessoal'} control={<Switch />} label={'É uma tarefa pessoal'} name={'isPersonal'}></FormControlLabel>
 				</FormGroup>
+
 				<SliderField key={'ExempleDetail-SliderFieldKEY'} placeholder="Slider" name="slider" />
 
 				<RadioButtonField
