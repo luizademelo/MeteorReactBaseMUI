@@ -19,6 +19,7 @@ export const SimpleToDoListItem = ({task}) => {
         <ListItem sx={SimpleToDoListItemStyle}>
             <ListItemText
                 primary={task.title}
+                sx={task.status ? {textDecoration: 'line-through'} : {}}
                 primaryTypographyProps={{color: 'black'}}
                 secondary={'Criado por: ' + task.nomeUsuario}
                 secondaryTypographyProps={{color: 'gray'}}
