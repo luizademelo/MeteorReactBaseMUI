@@ -24,6 +24,7 @@ import { isMobile } from '/imports/libs/deviceVerify';
 import { showLoading } from '/imports/ui/components/Loading/Loading';
 import { ComplexTable } from '/imports/ui/components/ComplexTable/ComplexTable';
 import ToggleField from '/imports/ui/components/SimpleFormFields/ToggleField/ToggleField';
+import { SimpleToDoList } from '/imports/ui/components/SimpleToDoList/SimpleToDoList';
 
 export interface IToDosList extends IDefaultListProps {
 	remove: (doc: IToDos) => void;
@@ -108,7 +109,10 @@ const ToDosList = (props: IToDosList) => {
 
 	const { image, title, description, nomeUsuario } = toDosApi.getSchema();
 	const schemaReduzido = { image, title, description, nomeUsuario: { type: String, label: 'Criado por' } };
-
+    const listProps = {
+        sort: {createdat: 1},
+        limit: 5,
+    }
 
 	return (
 		<PageLayout title={'Lista de Tarefas'} actions={[]}>
@@ -130,16 +134,6 @@ const ToDosList = (props: IToDosList) => {
 				key={'SearchDocKey'}
 			/>
 
-			{!isMobile && (
-				<ToggleField
-					label={'Habilitar ComplexTable'}
-					value={viewComplexTable}
-					onChange={(evt: { target: { value: boolean } }) => {
-						console.log('evt', evt, evt.target);
-						setViewComplexTable(evt.target.value);
-					}}
-				/>
-			)}
 			{(!viewComplexTable || isMobile) && (
 				<>
 					<TextField
@@ -152,32 +146,11 @@ const ToDosList = (props: IToDosList) => {
 						action={{ icon: 'search', onClick: click }}
 					/>
 
-					<SimpleTable
-						schema={schemaReduzido}
-						data={toDoss}
-						onClick={onClick}
-						actions={[{ icon: <Delete />, id: 'delete', onClick: callRemove }]}
-					/>
+
+					<SimpleToDoList props={listProps}/>
 				</>
 			)}
 
-			{!isMobile && viewComplexTable && (
-				<ComplexTable
-					data={toDoss}
-					schema={schemaReduzido}
-					onRowClick={(row) => navigate('/toDos/view/' + row.id)}
-					searchPlaceholder={'Pesquisar exemplo'}
-					onDelete={callRemove}
-					onEdit={(row) => navigate('/toDos/edit/' + row._id)}
-					toolbar={{
-						selectColumns: true,
-						exportTable: { csv: true, print: true },
-						searchFilter: true
-					}}
-					onFilterChange={onSearch}
-					loading={loading}
-				/>
-			)}
 
 			<div
 				style={{
