@@ -5,7 +5,7 @@ import { IAppMenu } from '../../modulesTypings';
 export const toDosMenuItemList: (IAppMenu | null)[] = [
   {
     path: '/toDos',
-    name: 'Tarefas',
+    name: 'Minhas Tarefas',
     icon: <Class/>,
   },
 ];
