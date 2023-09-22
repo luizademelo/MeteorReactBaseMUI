@@ -9,7 +9,7 @@ import { Edit } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
 
-export const SimpleToDoListItem = ({task}) => {
+export const SimpleToDoListItem = ({task, user}) => {
 
     const navigate = useNavigate(); 
 
@@ -18,7 +18,13 @@ export const SimpleToDoListItem = ({task}) => {
     }
 
     const onEdit = () => {
-        navigate(`/toDos/edit/${task._id}`); 
+        
+        if(user._id != task.createdby){
+            alert('Você não é o usuário que criou a tarefa!'); 
+        }else{
+            navigate(`/toDos/edit/${task._id}`); 
+        }
+
     }
 
     return (

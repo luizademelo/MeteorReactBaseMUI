@@ -7,6 +7,7 @@ import { toDosApi } from '/imports/modules/toDos/api/toDosApi';
 import { useTracker, withTracker } from 'meteor/react-meteor-data';
 import { SimpleToDoListItem } from '../SimpleToDoListItem/SimpleTodoListItem';
 import { SimpleToDoListStyle } from './SimpleToDoListStyle';
+import { useUserAccount } from '/imports/hooks/useUserAccount';
 
 
 
@@ -14,6 +15,9 @@ export const SimpleToDoList = ({props}) => {
 
     const config = subscribeConfig.get(); 
     const filter = {...config.filter};
+
+    const {user} = useUserAccount(); 
+
 
     const {sort, limit} = props; 
 
@@ -31,7 +35,7 @@ export const SimpleToDoList = ({props}) => {
 
     return (
         <List>
-            {toDoss.map((todo) => <SimpleToDoListItem key={todo._id} task={todo}/>)}
+            {toDoss.map((todo) => <SimpleToDoListItem key={todo._id} task={todo} user={user}/>)}
         </List>
     )
 }
