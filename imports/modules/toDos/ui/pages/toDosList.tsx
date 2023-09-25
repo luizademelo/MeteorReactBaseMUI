@@ -141,19 +141,9 @@ const ToDosList = (props: IToDosList) => {
 				}}>
 				<Pagination
 					style={{ width: 'fit-content', overflow: 'unset' }}
-					// rowsPerPageOptions={[5, 10, 25, 50]}
-					// labelRowsPerPage={''}
-					// component="div"
 					count={Math.ceil(total/5)}
-					// rowsPerPage={pageProperties.pageSize}
 					page={pageProperties.currentPage - 1}
 					onChange={handleChangePage}
-					// onPageChange={handleChangePage}
-					// onRowsPerPageChange={handleChangeRowsPerPage}
-					// labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-					// SelectProps={{
-						// inputProps: { 'aria-label': 'rows per page' }
-					// }}
 				/>
 			</div>
 
