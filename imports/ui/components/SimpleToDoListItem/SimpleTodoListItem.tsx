@@ -17,6 +17,10 @@ export const SimpleToDoListItem = ({task, user}) => {
         toDosApi.changeToDoStatus(task._id, event.target.checked); 
     }
 
+    const onView = () => {
+        navigate(`/toDos/view/${task._id}`); 
+    }
+
     const onEdit = () => {
         
         if(user._id != task.createdby){
@@ -28,7 +32,7 @@ export const SimpleToDoListItem = ({task, user}) => {
     }
 
     return (
-        <ListItem sx={SimpleToDoListItemStyle}>
+        <ListItem sx={SimpleToDoListItemStyle} onClick={onView}>
             <ListItemIcon onClick={onEdit} sx={{cursor: 'pointer'}}>
                 <Edit />
             </ListItemIcon>

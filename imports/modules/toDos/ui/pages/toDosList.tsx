@@ -25,6 +25,7 @@ import { showLoading } from '/imports/ui/components/Loading/Loading';
 import { ComplexTable } from '/imports/ui/components/ComplexTable/ComplexTable';
 import ToggleField from '/imports/ui/components/SimpleFormFields/ToggleField/ToggleField';
 import { SimpleToDoList } from '/imports/ui/components/SimpleToDoList/SimpleToDoList';
+import { Pagination } from '@mui/material';
 
 export interface IToDosList extends IDefaultListProps {
 	remove: (doc: IToDos) => void;
@@ -57,12 +58,8 @@ const ToDosList = (props: IToDosList) => {
 
     const idToDos = nanoid();
 
-	const onClick = (_event: React.SyntheticEvent, id: string) => {
-		navigate('/toDos/view/' + id);
-	};
-
-	const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
-		setPage(newPage + 1);
+	const handleChangePage = (_event: React.ChangeEvent<unknown>, newPage: number) => {
+		setPage(newPage);
 	};
 
 	const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,36 +100,20 @@ const ToDosList = (props: IToDosList) => {
 		showDeleteDialog && showDeleteDialog(title, message, doc, remove);
 	};
 
-	const handleSearchDocChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		!!e.target.value ? setFilter({ createdby: e.target.value }) : clearFilter();
-	};
 
 	const { image, title, description, nomeUsuario } = toDosApi.getSchema();
 	const schemaReduzido = { image, title, description, nomeUsuario: { type: String, label: 'Criado por' } };
+	const config = subscribeConfig.get();
+
     const listProps = {
-        sort: {createdat: 1},
-        limit: 5,
+		filter: {},
+        sort: {createdat: -1},
+        limit: config.pageProperties.pageSize,
+		skip: (config.pageProperties.currentPage -1)* config.pageProperties.pageSize,
     }
 
 	return (
 		<PageLayout title={'Lista de Tarefas'} actions={[]}>
-			<SearchDocField
-				api={userprofileApi}
-				subscribe={'getListOfusers'}
-				getOptionLabel={(doc) => doc.username || 'error'}
-				sort={{ username: 1 }}
-				textToQueryFilter={(textoPesquisa) => {
-					textoPesquisa = textoPesquisa.replace(/[+[\\?()*]/g, '\\$&');
-					return { username: new RegExp(textoPesquisa, 'i') };
-				}}
-				autocompleteOptions={{ noOptionsText: 'Não encontrado' }}
-				name={'userId'}
-				label={'Pesquisar com SearchDocField'}
-				onChange={handleSearchDocChange}
-				placeholder={'Todos'}
-				showAll={false}
-				key={'SearchDocKey'}
-			/>
 
 			{(!viewComplexTable || isMobile) && (
 				<>
@@ -146,7 +127,6 @@ const ToDosList = (props: IToDosList) => {
 						action={{ icon: 'search', onClick: click }}
 					/>
 
-
 					<SimpleToDoList props={listProps}/>
 				</>
 			)}
@@ -159,20 +139,21 @@ const ToDosList = (props: IToDosList) => {
 					flexDirection: 'row',
 					justifyContent: 'center'
 				}}>
-				<TablePagination
+				<Pagination
 					style={{ width: 'fit-content', overflow: 'unset' }}
-					rowsPerPageOptions={[10, 25, 50, 100]}
-					labelRowsPerPage={''}
-					component="div"
-					count={total || 0}
-					rowsPerPage={pageProperties.pageSize}
+					// rowsPerPageOptions={[5, 10, 25, 50]}
+					// labelRowsPerPage={''}
+					// component="div"
+					count={Math.ceil(total/5)}
+					// rowsPerPage={pageProperties.pageSize}
 					page={pageProperties.currentPage - 1}
-					onPageChange={handleChangePage}
-					onRowsPerPageChange={handleChangeRowsPerPage}
-					labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-					SelectProps={{
-						inputProps: { 'aria-label': 'rows per page' }
-					}}
+					onChange={handleChangePage}
+					// onPageChange={handleChangePage}
+					// onRowsPerPageChange={handleChangeRowsPerPage}
+					// labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+					// SelectProps={{
+						// inputProps: { 'aria-label': 'rows per page' }
+					// }}
 				/>
 			</div>
 
@@ -195,7 +176,7 @@ const ToDosList = (props: IToDosList) => {
 export const subscribeConfig = new ReactiveVar<IConfigList & { viewComplexTable: boolean }>({
 	pageProperties: {
 		currentPage: 1,
-		pageSize: 25
+		pageSize: 5
 	},
 	sortProperties: { field: 'createdat', sortAscending: false },
 	filter: {},
@@ -219,7 +200,8 @@ export const ToDosListContainer = withTracker((props: IDefaultContainerProps) =>
 	//Reactive Search/Filter
 	const config = subscribeConfig.get();
 	const sort = {
-		[config.sortProperties.field]: config.sortProperties.sortAscending ? 1 : -1
+		// [config.sortProperties.field]: config.sortProperties.sortAscending ? 1 : -1
+		[config.sortProperties.field]: -1,
 	};
 	toDosSearch.setActualConfig(config);
 
@@ -235,7 +217,7 @@ export const ToDosListContainer = withTracker((props: IDefaultContainerProps) =>
 		limit,
 		skip
 	});
-	const toDoss = subHandle?.ready() ? toDosApi.find(filter, { sort }).fetch() : [];
+	const toDoss = subHandle?.ready() ? toDosApi.find(filter, { sort, limit, skip }).fetch() : [];
 	console.log('toDos List: ', toDoss);
 
 	return {

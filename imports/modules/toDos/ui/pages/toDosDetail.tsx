@@ -29,13 +29,21 @@ interface IToDosDetail extends IDefaultDetailProps {
 }
 
 const ToDosDetail = (props: IToDosDetail) => {
-	const { isPrintView, screenState, loading, toDosDoc, save, navigate } = props;
+	const { isPrintView, screenState, loading, toDosDoc, save, navigate, user } = props;
 
 	const theme = useTheme();
 
 	const handleSubmit = (doc: IToDos) => {
 		save(doc);
 	};
+
+	const onEdit = () => {
+		if(user && user._id != toDosDoc.createdby){
+			alert('Você não é o usuário que criou a tarefa!')
+		}else{
+			navigate(`/toDos/edit/${toDosDoc._id}`)
+		}
+	}
 
 	return (
 		<PageLayout
@@ -155,9 +163,7 @@ const ToDosDetail = (props: IToDosDetail) => {
 					{!isPrintView && screenState === 'view' ? (
 						<Button
 							key={'b2'}
-							onClick={() => {
-								navigate(`/toDos/edit/${toDosDoc._id}`);
-							}}
+							onClick={onEdit}
 							color={'primary'}
 							variant="contained">
 							{'Editar'}

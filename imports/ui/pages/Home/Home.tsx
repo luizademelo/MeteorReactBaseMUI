@@ -21,8 +21,10 @@ const Home = () => {
     }, [user]);
 
     const props = {
-        sort: {createdat: 1},
+        filter: {},
+        sort: {createdat: -1},
         limit: 5,
+        skip: 0,
     }
 
     return (

@@ -13,21 +13,25 @@ import { useUserAccount } from '/imports/hooks/useUserAccount';
 
 export const SimpleToDoList = ({props}) => {
 
-    const config = subscribeConfig.get(); 
-    const filter = {...config.filter};
+    // const config = subscribeConfig.get(); 
+    // const filter = {...config.filter};
 
     const {user} = useUserAccount(); 
 
 
-    const {sort, limit} = props; 
+    const {filter, sort, limit, skip} = props; 
+    // const sort = {[config.sortProperties.field]:  -1 };
+	// const limit = config.pageProperties.pageSize;
+    // const skip = (config.pageProperties.currentPage-1) * config.pageProperties.pageSize;
 
-    const skip = (config.pageProperties.currentPage-1) * config.pageProperties.pageSize;
 
+
+    console.log("skip: ", skip); 
     // Collection Subscribe
     
     const toDoss = useTracker(() => {
         const subHandle = toDosApi.subscribe('toDosList', filter,{sort, limit, skip}); 
-        const toDoss =  subHandle?.ready() ? toDosApi.find(filter,{sort, limit}).fetch() : []; 
+        const toDoss =  subHandle?.ready() ? toDosApi.find(filter,{sort, limit, skip}).fetch() : []; 
         return toDoss; 
     }) 
 
