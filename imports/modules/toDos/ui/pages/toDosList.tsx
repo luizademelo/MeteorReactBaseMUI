@@ -142,7 +142,7 @@ const ToDosList = (props: IToDosList) => {
 				<Pagination
 					style={{ width: 'fit-content', overflow: 'unset' }}
 					count={Math.ceil(total/5)}
-					page={pageProperties.currentPage - 1}
+					page={pageProperties.currentPage}
 					onChange={handleChangePage}
 				/>
 			</div>
