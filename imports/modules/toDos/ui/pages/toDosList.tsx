@@ -1,5 +1,5 @@
 import React from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
+import { useTracker, withTracker } from 'meteor/react-meteor-data';
 import { toDosApi } from '../../api/toDosApi';
 import { userprofileApi } from '../../../../userprofile/api/UserProfileApi';
 import { SimpleTable } from '/imports/ui/components/SimpleTable/SimpleTable';
@@ -22,15 +22,13 @@ import { Recurso } from '../../config/Recursos';
 import { RenderComPermissao } from '/imports/seguranca/ui/components/RenderComPermisao';
 import { isMobile } from '/imports/libs/deviceVerify';
 import { showLoading } from '/imports/ui/components/Loading/Loading';
-import { ComplexTable } from '/imports/ui/components/ComplexTable/ComplexTable';
 import ToggleField from '/imports/ui/components/SimpleFormFields/ToggleField/ToggleField';
 import { SimpleToDoList } from '/imports/ui/components/SimpleToDoList/SimpleToDoList';
-import { Pagination } from '@mui/material';
+import { List, Pagination } from '@mui/material';
+import { useUserAccount } from '/imports/hooks/useUserAccount';
 
 export interface IToDosList extends IDefaultListProps {
 	remove: (doc: IToDos) => void;
-	viewComplexTable: boolean;
-	setViewComplexTable: (_enable: boolean) => void;
 	toDoss: IToDos[];
 	setFilter: (newFilter: Object) => void;
 	clearFilter: () => void;
@@ -38,16 +36,12 @@ export interface IToDosList extends IDefaultListProps {
 
 const ToDosList = (props: IToDosList) => {
 	const {
-		toDoss,
 		navigate,
 		remove,
 		showDeleteDialog,
 		onSearch,
 		total,
 		loading,
-		viewComplexTable,
-		setViewComplexTable,
-		setFilter,
 		clearFilter,
 		setPage,
 		setPageSize,
@@ -57,14 +51,11 @@ const ToDosList = (props: IToDosList) => {
 	} = props;
 
     const idToDos = nanoid();
+    const {user} = useUserAccount(); 
+
 
 	const handleChangePage = (_event: React.ChangeEvent<unknown>, newPage: number) => {
 		setPage(newPage);
-	};
-
-	const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setPageSize(parseInt(event.target.value, 10));
-		setPage(1);
 	};
 
 	const [text, setText] = React.useState(searchBy || '');
@@ -76,6 +67,7 @@ const ToDosList = (props: IToDosList) => {
 		}
 		setText(e.target.value);
 	};
+
 	const keyPress = (_e: React.SyntheticEvent) => {
 		// if (e.key === 'Enter') {
 		if (text && text.trim().length > 0) {
@@ -110,12 +102,12 @@ const ToDosList = (props: IToDosList) => {
         sort: {createdat: -1},
         limit: config.pageProperties.pageSize,
 		skip: (config.pageProperties.currentPage -1)* config.pageProperties.pageSize,
+		onRemove: callRemove,
     }
 
 	return (
 		<PageLayout title={'Lista de Tarefas'} actions={[]}>
 
-			{(!viewComplexTable || isMobile) && (
 				<>
 					<TextField
 						name={'pesquisar'}
@@ -127,9 +119,10 @@ const ToDosList = (props: IToDosList) => {
 						action={{ icon: 'search', onClick: click }}
 					/>
 
+	
+
 					<SimpleToDoList props={listProps}/>
 				</>
-			)}
 
 
 			<div
@@ -163,7 +156,7 @@ const ToDosList = (props: IToDosList) => {
 	);
 };
 
-export const subscribeConfig = new ReactiveVar<IConfigList & { viewComplexTable: boolean }>({
+export const subscribeConfig = new ReactiveVar<IConfigList>({
 	pageProperties: {
 		currentPage: 1,
 		pageSize: 5
@@ -171,7 +164,6 @@ export const subscribeConfig = new ReactiveVar<IConfigList & { viewComplexTable:
 	sortProperties: { field: 'createdat', sortAscending: false },
 	filter: {},
 	searchBy: null,
-	viewComplexTable: false
 });
 
 const toDosSearch = initSearch(
@@ -181,8 +173,6 @@ const toDosSearch = initSearch(
 );
 
 let onSearchToDosTyping: NodeJS.Timeout;
-
-const viewComplexTable = new ReactiveVar(false);
 
 export const ToDosListContainer = withTracker((props: IDefaultContainerProps) => {
 	const { showNotification } = props;
@@ -233,8 +223,6 @@ export const ToDosListContainer = withTracker((props: IDefaultContainerProps) =>
 				}
 			});
 		},
-		viewComplexTable: viewComplexTable.get(),
-		setViewComplexTable: (enableComplexTable: boolean) => viewComplexTable.set(enableComplexTable),
 		searchBy: config.searchBy,
 		onSearch: (...params: any) => {
 			onSearchToDosTyping && clearTimeout(onSearchToDosTyping);

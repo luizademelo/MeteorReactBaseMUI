@@ -19,7 +19,7 @@ export const SimpleToDoList = ({props}) => {
     const {user} = useUserAccount(); 
 
 
-    const {filter, sort, limit, skip} = props; 
+    const {filter, sort, limit, skip, onRemove} = props; 
     // const sort = {[config.sortProperties.field]:  -1 };
 	// const limit = config.pageProperties.pageSize;
     // const skip = (config.pageProperties.currentPage-1) * config.pageProperties.pageSize;
@@ -39,7 +39,7 @@ export const SimpleToDoList = ({props}) => {
 
     return (
         <List>
-            {toDoss.map((todo) => <SimpleToDoListItem key={todo._id} task={todo} user={user}/>)}
+            {toDoss.map((todo) => <SimpleToDoListItem key={todo._id} task={todo} user={user} onRemove={onRemove}/>)}
         </List>
     )
 }

@@ -7,9 +7,10 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { toDosApi } from '/imports/modules/toDos/api/toDosApi';
 import { Edit } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import Delete from '@mui/icons-material/Delete';
 
 
-export const SimpleToDoListItem = ({task, user}) => {
+export const SimpleToDoListItem = ({task, user, onRemove}) => {
 
     const navigate = useNavigate(); 
 
@@ -32,7 +33,7 @@ export const SimpleToDoListItem = ({task, user}) => {
     }
 
     return (
-        <ListItem sx={SimpleToDoListItemStyle} onClick={onView}>
+        <ListItem sx={SimpleToDoListItemStyle}>
             <ListItemIcon onClick={onEdit} sx={{cursor: 'pointer'}}>
                 <Edit />
             </ListItemIcon>
@@ -43,6 +44,11 @@ export const SimpleToDoListItem = ({task, user}) => {
                 secondary={'Criado por: ' + task.nomeUsuario}
                 secondaryTypographyProps={{color: 'gray'}}
             />
+            {
+                onRemove ? 
+                <Delete sx={{cursor: 'pointer'}} onClick={() => onRemove(task)}/>
+                : <></>
+            }
             <Checkbox 
                 sx={{color: 'black'}}
                 checked={task.status}
