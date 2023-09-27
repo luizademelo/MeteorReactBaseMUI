@@ -8,7 +8,7 @@ import { toDosApi } from '/imports/modules/toDos/api/toDosApi';
 import { Edit } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import Delete from '@mui/icons-material/Delete';
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export const SimpleToDoListItem = ({task, user, onRemove}) => {
 
@@ -34,8 +34,8 @@ export const SimpleToDoListItem = ({task, user, onRemove}) => {
 
     return (
         <ListItem sx={SimpleToDoListItemStyle}>
-            <ListItemIcon onClick={onEdit} sx={{cursor: 'pointer'}}>
-                <Edit />
+            <ListItemIcon onClick={onView} sx={{cursor: 'pointer'}}>
+                <VisibilityIcon />
             </ListItemIcon>
             <ListItemText
                 primary={task.title}
@@ -44,11 +44,16 @@ export const SimpleToDoListItem = ({task, user, onRemove}) => {
                 secondary={'Criado por: ' + task.nomeUsuario}
                 secondaryTypographyProps={{color: 'gray'}}
             />
-            {
-                onRemove ? 
-                <Delete sx={{cursor: 'pointer'}} onClick={() => onRemove(task)}/>
-                : <></>
-            }
+            <ListItemIcon onClick={onEdit} sx={{cursor: 'pointer'}}>
+                <Edit />
+            </ListItemIcon>
+            <ListItemIcon>
+                {
+                    onRemove ? 
+                    <Delete sx={{cursor: 'pointer'}} onClick={() => onRemove(task)}/>
+                    : <></>
+                }
+            </ListItemIcon>
             <Checkbox 
                 sx={{color: 'black'}}
                 checked={task.status}
