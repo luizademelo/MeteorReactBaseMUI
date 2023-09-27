@@ -24,7 +24,7 @@ import { isMobile } from '/imports/libs/deviceVerify';
 import { showLoading } from '/imports/ui/components/Loading/Loading';
 import ToggleField from '/imports/ui/components/SimpleFormFields/ToggleField/ToggleField';
 import { SimpleToDoList } from '/imports/ui/components/SimpleToDoList/SimpleToDoList';
-import { List, Pagination } from '@mui/material';
+import { Box, Checkbox, List, Pagination, Typography } from '@mui/material';
 import { useUserAccount } from '/imports/hooks/useUserAccount';
 
 export interface IToDosList extends IDefaultListProps {
@@ -51,8 +51,7 @@ const ToDosList = (props: IToDosList) => {
 	} = props;
 
     const idToDos = nanoid();
-    const {user} = useUserAccount(); 
-
+	const user = useUserAccount();
 
 	const handleChangePage = (_event: React.ChangeEvent<unknown>, newPage: number) => {
 		setPage(newPage);
@@ -98,8 +97,14 @@ const ToDosList = (props: IToDosList) => {
 	const config = subscribeConfig.get();
 
     const listProps = {
-		filter: {},
-        sort: {createdat: -1},
+		filter: {
+			$or: [
+				{createdby: user.userId},
+				{isPersonal: false},
+			]
+			
+		},
+		sort: {createdat: -1},
         limit: config.pageProperties.pageSize,
 		skip: (config.pageProperties.currentPage -1)* config.pageProperties.pageSize,
 		onRemove: callRemove,
@@ -108,7 +113,14 @@ const ToDosList = (props: IToDosList) => {
 	return (
 		<PageLayout title={'Lista de Tarefas'} actions={[]}>
 
+				<Box>
+					<Checkbox />
+					<Typography>Mostrar tarefas concluídas</Typography>
+				</Box>
+
 				<>
+			
+
 					<TextField
 						name={'pesquisar'}
 						label={'Pesquisar'}
@@ -118,9 +130,7 @@ const ToDosList = (props: IToDosList) => {
 						placeholder="Digite aqui o que deseja pesquisa..."
 						action={{ icon: 'search', onClick: click }}
 					/>
-
-	
-
+					
 					<SimpleToDoList props={listProps}/>
 				</>
 

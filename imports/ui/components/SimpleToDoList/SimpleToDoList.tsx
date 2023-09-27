@@ -19,7 +19,7 @@ export const SimpleToDoList = ({props}) => {
     const {user} = useUserAccount(); 
 
 
-    const {filter, sort, limit, skip, onRemove} = props; 
+    const {filter, limit, skip, onRemove} = props; 
     // const sort = {[config.sortProperties.field]:  -1 };
 	// const limit = config.pageProperties.pageSize;
     // const skip = (config.pageProperties.currentPage-1) * config.pageProperties.pageSize;
@@ -30,8 +30,8 @@ export const SimpleToDoList = ({props}) => {
     // Collection Subscribe
     
     const toDoss = useTracker(() => {
-        const subHandle = toDosApi.subscribe('toDosList', filter,{sort, limit, skip}); 
-        const toDoss =  subHandle?.ready() ? toDosApi.find(filter,{sort, limit, skip}).fetch() : []; 
+        const subHandle = toDosApi.subscribe('toDosList', filter,{limit, skip}); 
+        const toDoss =  subHandle?.ready() ? toDosApi.find(filter,{limit, skip}).fetch() : []; 
         return toDoss; 
     }) 
 

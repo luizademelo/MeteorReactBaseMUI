@@ -47,13 +47,13 @@ export const SimpleToDoListItem = ({task, user, onRemove}) => {
             <ListItemIcon onClick={onEdit} sx={{cursor: 'pointer'}}>
                 <Edit />
             </ListItemIcon>
-            <ListItemIcon>
                 {
                     onRemove ? 
-                    <Delete sx={{cursor: 'pointer'}} onClick={() => onRemove(task)}/>
+                    <ListItemIcon>
+                        <Delete sx={{cursor: 'pointer'}} onClick={() => onRemove(task)}/>
+                    </ListItemIcon> 
                     : <></>
                 }
-            </ListItemIcon>
             <Checkbox 
                 sx={{color: 'black'}}
                 checked={task.status}
