@@ -98,10 +98,7 @@ const ToDosDetail = (props: IToDosDetail) => {
 					<SelectField key={'f2-tipoKEY'} placeholder="Selecione um tipo" name="type" />
 					<SelectField key={'f2-multiTipoKEY'} placeholder="Selecione alguns tipos" name="typeMulti" />
 				</FormGroup>
-				<FormGroup key={'fieldsThree'} {...{ formType: 'subform', name: 'contacts' }}>
-					<TextMaskField key={'f3-TelefoneKEY'} placeholder="Telefone" name="phone" />
-					<TextMaskField key={'f3-CPFKEY'} placeholder="CPF" name="cpf" />
-				</FormGroup>
+	
 				<FormGroup key={'fieldsFour'} {...{ formType: 'subformArray', name: 'tasks' }}>
 					<TextField key={'f4-nomeTarefaKEY'} placeholder="Nome da Tarefa" name="name" />
 					<TextField key={'f4-descricaoTarefaKEY'} placeholder="Descrição da Tarefa" name="description" />
@@ -109,8 +106,6 @@ const ToDosDetail = (props: IToDosDetail) => {
 				<FormGroup key={'fieldsFive'}>
 					<FormControlLabel key={'f5-eTarefaPessoal'} control={<Switch />} label={'É uma tarefa pessoal'} name={'isPersonal'}></FormControlLabel>
 				</FormGroup>
-
-				<SliderField key={'ExempleDetail-SliderFieldKEY'} placeholder="Slider" name="slider" />
 
 				<RadioButtonField
 					key={'ExempleDetail-RadioKEY'}
@@ -122,10 +117,6 @@ const ToDosDetail = (props: IToDosDetail) => {
 						{ value: 'valC', label: 'Valor C' }
 					]}
 				/>
-
-				<FormGroup key={'fieldsFifth'}>
-					<AudioRecorder key={'f5-audioKEY'} placeholder="Áudio" name="audio" />
-				</FormGroup>
 
 				<UploadFilesCollection
 					key={'ExempleDetail-UploadsFilesKEY'}

@@ -58,6 +58,7 @@ const ToDosList = (props: IToDosList) => {
 	};
 
 	const [text, setText] = React.useState(searchBy || '');
+	const [showCompleted, setShowCompleted] = React.useState(false); 
 
 	const change = (e: React.ChangeEvent<HTMLInputElement>) => {
 		clearFilter();
@@ -91,18 +92,23 @@ const ToDosList = (props: IToDosList) => {
 		showDeleteDialog && showDeleteDialog(title, message, doc, remove);
 	};
 
+	const handleStatusToggle = (event) => {
+		setShowCompleted(event.target.checked); 
+	}
 
 	const { image, title, description, nomeUsuario } = toDosApi.getSchema();
 	const schemaReduzido = { image, title, description, nomeUsuario: { type: String, label: 'Criado por' } };
 	const config = subscribeConfig.get();
+
+	const showCompletedFilter = !showCompleted ? {status: false} : {}; 
 
     const listProps = {
 		filter: {
 			$or: [
 				{createdby: user.userId},
 				{isPersonal: false},
-			]
-			
+			], 
+			...showCompletedFilter,
 		},
 		sort: {createdat: -1},
         limit: config.pageProperties.pageSize,
@@ -114,7 +120,7 @@ const ToDosList = (props: IToDosList) => {
 		<PageLayout title={'Lista de Tarefas'} actions={[]}>
 
 				<Box>
-					<Checkbox />
+					<Checkbox onChange={handleStatusToggle} checked={showCompleted} />
 					<Typography>Mostrar tarefas concluídas</Typography>
 				</Box>
 
