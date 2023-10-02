@@ -9,6 +9,6 @@ export interface IConfigList {
         pageSize: number;
     };
     sortProperties: ISortProperties;
-    filter: { [key: string]: object | string };
+    filter: { [key: string]: any };
     searchBy: string | null;
 }

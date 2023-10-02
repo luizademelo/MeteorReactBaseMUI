@@ -3,6 +3,8 @@ import { Recurso } from '../config/Recursos';
 import { toDosSch, IToDos } from './toDosSch';
 import { userprofileServerApi } from '/imports/userprofile/api/UserProfileServerApi';
 import { ProductServerBase } from '/imports/api/productServerBase';
+import { useUserAccount } from '/imports/hooks/useUserAccount';
+import { Meteor } from 'meteor/meteor';
 // endregion
 
 class ToDosServerApi extends ProductServerBase<IToDos> {
@@ -12,11 +14,20 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
         });
 
         const self = this;
+        
 
         this.addTransformedPublication(
             'toDosList',
             (filter = {}) => {
-                return this.defaultListCollectionPublication(filter, {
+                const userId = Meteor.userId();
+
+				if (!userId) {
+					return;
+				}
+        
+                return this.defaultListCollectionPublication({...filter, $or: [
+                    {createdby: userId}, {isPersonal: false}
+                ]}, {
                     projection: { image: 1, title: 1, description: 1, createdby: 1, isPersonal: 1, status: 1 },
                     sort: {createdat: -1},
                 });

@@ -35,7 +35,7 @@ export const toDosSch = {
         type: Boolean,
         label: 'É uma tarefa pessoal',
         defaultValue: false,
-        optional: true,
+        optional: false,
     },
     status: {
         type: Boolean,
@@ -81,34 +81,6 @@ export const toDosSch = {
         optional: true,
         isUpload: true,
     },
-    chip: {
-        type: [String],
-        label: 'Chips',
-        defaultValue: '',
-        optional: true,
-    },
-    contacts: {
-        type: Object,
-        label: 'Contatos',
-        defaultValue: '',
-        optional: true,
-        subSchema: {
-            phone: {
-                type: String,
-                label: 'Telefone',
-                defaultValue: '',
-                optional: true,
-                mask: '(##) ####-####',
-            },
-            cpf: {
-                type: String,
-                label: 'CPF',
-                defaultValue: '',
-                optional: true,
-                mask: '###.###.###-##',
-            },
-        },
-    },
     tasks: {
         type: [Object],
         label: 'Tarefas',
@@ -129,28 +101,7 @@ export const toDosSch = {
             },
         },
     },
-    audio: {
-        type: String,
-        label: 'Áudio',
-        defaultValue: '',
-        optional: true,
-        isAudio: true,
-    },
-    address: {
-        type: Object,
-        label: 'Localização',
-        defaultValue: '',
-        isMapLocation: true,
-        optional: true,
-    },
-    slider: {
-        type: Number,
-        label: 'Slider',
-        defaultValue: 0,
-        optional: true,
-        max: 100,
-        min: 0,
-    },
+
     statusRadio: {
         type: String,
         label: 'Status RadioButton',

@@ -97,24 +97,35 @@ const ToDosList = (props: IToDosList) => {
 	}
 
 	const { image, title, description, nomeUsuario } = toDosApi.getSchema();
-	const schemaReduzido = { image, title, description, nomeUsuario: { type: String, label: 'Criado por' } };
 	const config = subscribeConfig.get();
 
 	const showCompletedFilter = !showCompleted ? {status: false} : {}; 
+	config.filter = showCompletedFilter;
+	// subscribeConfig.set(config); 
 
     const listProps = {
 		filter: {
-			$or: [
-				{createdby: user.userId},
-				{isPersonal: false},
-			], 
+			// $or: [
+			// 	{createdby: user.userId},
+			// 	{isPersonal: false},
+			// ], 
 			...showCompletedFilter,
+			title: {$regex: text},
 		},
 		sort: {createdat: -1},
         limit: config.pageProperties.pageSize,
 		skip: (config.pageProperties.currentPage -1)* config.pageProperties.pageSize,
 		onRemove: callRemove,
     }
+	
+	// config.filter = {$or: [
+	// 		{createdby: user.userId},
+	// 		{isPersonal: false},
+	// 	], 
+	// 	...showCompletedFilter,
+	// 	title: {$regex: text},
+	// }
+	// subscribeConfig.set(config)
 
 	return (
 		<PageLayout title={'Lista de Tarefas'} actions={[]}>
@@ -217,7 +228,6 @@ export const ToDosListContainer = withTracker((props: IDefaultContainerProps) =>
 	console.log('toDos List: ', toDoss);
 
 	return {
-		toDoss,
 		loading: !!subHandle && !subHandle.ready(),
 		remove: (doc: IToDos) => {
 			toDosApi.remove(doc, (e: IMeteorError) => {

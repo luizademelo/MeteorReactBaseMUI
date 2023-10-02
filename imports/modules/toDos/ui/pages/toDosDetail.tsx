@@ -107,16 +107,6 @@ const ToDosDetail = (props: IToDosDetail) => {
 					<FormControlLabel key={'f5-eTarefaPessoal'} control={<Switch />} label={'É uma tarefa pessoal'} name={'isPersonal'}></FormControlLabel>
 				</FormGroup>
 
-				<RadioButtonField
-					key={'ExempleDetail-RadioKEY'}
-					placeholder="Opções da Tarefa"
-					name="statusRadio"
-					options={[
-						{ value: 'valA', label: 'Valor A' },
-						{ value: 'valB', label: 'Valor B' },
-						{ value: 'valC', label: 'Valor C' }
-					]}
-				/>
 
 				<UploadFilesCollection
 					key={'ExempleDetail-UploadsFilesKEY'}
@@ -124,9 +114,7 @@ const ToDosDetail = (props: IToDosDetail) => {
 					label={'Arquivos'}
 					doc={{ _id: toDosDoc?._id }}
 				/>
-				<FormGroup key={'fieldsSixth'} {...{ name: 'chips' }}>
-					<ChipInput key={'f6-cipsKEY'} name="chip" placeholder="Chip" />
-				</FormGroup>
+
 				<div
 					key={'Buttons'}
 					style={{
