@@ -92,23 +92,18 @@ const ToDosList = (props: IToDosList) => {
 		showDeleteDialog && showDeleteDialog(title, message, doc, remove);
 	};
 
+	const config = subscribeConfig.get();
+	const showCompletedFilter = !showCompleted ? {status: false} : {}; 
+
 	const handleStatusToggle = (event) => {
 		setShowCompleted(event.target.checked); 
+		config.filter = showCompletedFilter;
 	}
+	subscribeConfig.set(config); 
 
-	const { image, title, description, nomeUsuario } = toDosApi.getSchema();
-	const config = subscribeConfig.get();
-
-	const showCompletedFilter = !showCompleted ? {status: false} : {}; 
-	config.filter = showCompletedFilter;
-	// subscribeConfig.set(config); 
 
     const listProps = {
 		filter: {
-			// $or: [
-			// 	{createdby: user.userId},
-			// 	{isPersonal: false},
-			// ], 
 			...showCompletedFilter,
 			title: {$regex: text},
 		},
@@ -118,14 +113,6 @@ const ToDosList = (props: IToDosList) => {
 		onRemove: callRemove,
     }
 	
-	// config.filter = {$or: [
-	// 		{createdby: user.userId},
-	// 		{isPersonal: false},
-	// 	], 
-	// 	...showCompletedFilter,
-	// 	title: {$regex: text},
-	// }
-	// subscribeConfig.set(config)
 
 	return (
 		<PageLayout title={'Lista de Tarefas'} actions={[]}>
@@ -136,8 +123,6 @@ const ToDosList = (props: IToDosList) => {
 				</Box>
 
 				<>
-			
-
 					<TextField
 						name={'pesquisar'}
 						label={'Pesquisar'}

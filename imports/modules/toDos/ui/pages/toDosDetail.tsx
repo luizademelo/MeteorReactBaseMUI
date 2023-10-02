@@ -99,12 +99,8 @@ const ToDosDetail = (props: IToDosDetail) => {
 					<SelectField key={'f2-multiTipoKEY'} placeholder="Selecione alguns tipos" name="typeMulti" />
 				</FormGroup>
 	
-				<FormGroup key={'fieldsFour'} {...{ formType: 'subformArray', name: 'tasks' }}>
-					<TextField key={'f4-nomeTarefaKEY'} placeholder="Nome da Tarefa" name="name" />
-					<TextField key={'f4-descricaoTarefaKEY'} placeholder="Descrição da Tarefa" name="description" />
-				</FormGroup>
-				<FormGroup key={'fieldsFive'}>
-					<FormControlLabel key={'f5-eTarefaPessoal'} control={<Switch />} label={'É uma tarefa pessoal'} name={'isPersonal'}></FormControlLabel>
+				<FormGroup key={'fieldsThree'}>
+					<FormControlLabel key={'f3-eTarefaPessoal'} control={<Switch />} label={'É uma tarefa pessoal'} name={'isPersonal'}></FormControlLabel>
 				</FormGroup>
 
 
