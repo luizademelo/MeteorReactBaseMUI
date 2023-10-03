@@ -49,7 +49,7 @@ export const ModalContainer = (options: IModalContainer = commonOptions) => {
 	return (
 		<Modal
 			open={options.open}
-			onClose={options.modalOnClose ? options.onClose : undefined}
+			onClose={options.onClose}
 			aria-labelledby="modal-modal-title"
 			aria-describedby="modal-modal-description">
 			<Box id="modalDiv" sx={style}>

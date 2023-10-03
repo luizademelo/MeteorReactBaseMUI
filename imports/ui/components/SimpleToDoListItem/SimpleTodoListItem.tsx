@@ -9,17 +9,28 @@ import { Edit } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import Delete from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { IModalContainer, ModalContainer } from '../../GeneralComponents/ModalContainer';
+import { ToDosDetailContainer } from '/imports/modules/toDos/ui/pages/toDosDetail';
+import Home from '../../pages/Home/Home';
 
 export const SimpleToDoListItem = ({task, user, onRemove}) => {
 
     const navigate = useNavigate(); 
+    const [modalOpen, setModalOpen] = React.useState(false); 
 
     const handleStatusToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
         toDosApi.changeToDoStatus(task._id, event.target.checked); 
     }
 
+    const props = {
+        open: modalOpen,
+        onOpen: () => setModalOpen(true),
+        onClose: () => setModalOpen(false),
+        component: <ToDosDetailContainer screenState={'view'} id={task._id} />
+    } ; 
     const onView = () => {
-        navigate(`/toDos/view/${task._id}`); 
+        // navigate(navigate(`/toDos/view/${task._id}`); 
+        setModalOpen(!modalOpen) ;
     }
 
     const onEdit = () => {
@@ -33,6 +44,7 @@ export const SimpleToDoListItem = ({task, user, onRemove}) => {
     }
 
     return (
+        <>
         <ListItem sx={SimpleToDoListItemStyle}>
             <ListItemIcon onClick={onView} sx={{cursor: 'pointer'}}>
                 <VisibilityIcon />
@@ -62,5 +74,7 @@ export const SimpleToDoListItem = ({task, user, onRemove}) => {
                 checkedIcon={<CheckCircleIcon />}
                 />
         </ListItem>
+        <ModalContainer {...props as IModalContainer} />
+        </>
     )
 }
